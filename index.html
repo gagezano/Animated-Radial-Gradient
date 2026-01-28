@@ -3,22 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Animated Radial Gradient BG Combustion</title>
+  <title>Animated Radial Gradient BG – Arc Footer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="back-link">
-    <a href="../index.html">
-      <span class="back-link__icon">⟵</span>Back to SelfHovering
+    <a href="../index.html" aria-label="Back to SelfHovering">
+      <span class="back-link__arrow" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </span>
+      <img src="../sa-icon.svg" alt="" class="back-link__logo" width="32" height="28" />
     </a>
   </header>
 
-  <div class="gradient"></div>
-  <div class="content">
-    <h1>Animated Radial Gradient BG Combustion</h1>
-    <div class="project-icon">
-      <img src="../sa-icon.svg" alt="SA Icon" />
+  <div class="gradient-wrap">
+    <canvas id="gradient-canvas" class="footer-gradient-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <div class="controls-mobile-wrap">
+    <nav class="controls-tabs" id="controls-tabs" aria-label="Control panels" hidden>
+      <button type="button" class="controls-tabs__btn" data-tab="speed" aria-selected="true">speed</button>
+      <button type="button" class="controls-tabs__btn" data-tab="adjust" aria-selected="false">Adjust all</button>
+      <button type="button" class="controls-tabs__btn" data-tab="colors" aria-selected="false">Spec colors</button>
+    </nav>
+
+    <div class="controls-left">
+    <div class="controls controls--speed" data-panel="speed" aria-label="Animation speed">
+      <label for="speed-dial" class="controls__section-label">Speed</label>
+      <div class="speed-dial-row">
+        <input type="range" id="speed-dial" class="color-dial" min="3000" max="15000" value="9000" step="100" aria-label="Speed" />
+        <span id="speed-value" class="color-dial-value">9s</span>
+      </div>
+      <div class="speed-dial-labels" aria-hidden="true">
+        <span>3s</span><span>6s</span><span>9s</span><span>12s</span><span>15s</span>
+      </div>
+      <select id="speed-select" class="speed-select" aria-label="Speed preset">
+        <option value="3000">Fast (3s)</option>
+        <option value="6000">Faster (6s)</option>
+        <option value="9000" selected>Medium (9s)</option>
+        <option value="12000">Slower (12s)</option>
+        <option value="15000">Slow (15s)</option>
+      </select>
+      <a href="#" id="speed-restore" class="controls-restore"><span class="controls-restore__icon" aria-hidden="true">↺</span><span class="controls-restore__text">Default</span></a>
+    </div>
+    <div class="controls controls--adjust-all" data-panel="adjust" aria-label="Adjust all colors">
+      <span class="controls__section-label">Adjust all colors</span>
+      <div class="color-adjust__row">
+        <label for="hue-dial">Hue</label>
+        <input type="range" id="hue-dial" class="color-dial" min="0" max="360" value="0" aria-label="Hue shift" />
+        <span id="hue-value" class="color-dial-value">0</span>
+      </div>
+      <div class="color-adjust__row">
+        <label for="saturation-dial">Saturation</label>
+        <input type="range" id="saturation-dial" class="color-dial" min="0" max="200" value="100" aria-label="Saturation scale" />
+        <span id="saturation-value" class="color-dial-value">100%</span>
+      </div>
+      <div class="color-adjust__row">
+        <label for="lightness-dial">Lightness</label>
+        <input type="range" id="lightness-dial" class="color-dial" min="0" max="200" value="100" aria-label="Lightness scale" />
+        <span id="lightness-value" class="color-dial-value">100%</span>
+      </div>
+      <a href="#" id="adjust-restore" class="controls-restore"><span class="controls-restore__icon" aria-hidden="true">↺</span><span class="controls-restore__text">Default</span></a>
     </div>
   </div>
+
+  <div class="controls controls--colors" data-panel="colors" aria-label="Gradient colors">
+    <label for="colors-textarea" class="controls__section-label">Choose colors</label>
+    <textarea id="colors-textarea" rows="3" spellcheck="false"></textarea>
+    <div id="color-pickers" class="color-pickers"></div>
+    <a href="#" id="colors-restore" class="controls-restore"><span class="controls-restore__icon" aria-hidden="true">↺</span><span class="controls-restore__text">Default</span></a>
+  </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      var tabs = document.getElementById('controls-tabs')
+      var media = window.matchMedia('(max-width: 768px)')
+      function setTab(tab) {
+        document.body.setAttribute('data-mobile-tab', tab)
+        if (tabs) {
+          tabs.querySelectorAll('.controls-tabs__btn').forEach(function (btn) {
+            btn.setAttribute('aria-selected', btn.getAttribute('data-tab') === tab ? 'true' : 'false')
+          })
+        }
+      }
+      function updateVisibility() {
+        if (media.matches && tabs) {
+          tabs.hidden = false
+          setTab(document.body.getAttribute('data-mobile-tab') || 'speed')
+        } else {
+          tabs.hidden = true
+        }
+      }
+      if (tabs) {
+        tabs.addEventListener('click', function (e) {
+          var btn = e.target.closest('.controls-tabs__btn')
+          if (btn) setTab(btn.getAttribute('data-tab'))
+        })
+        media.addEventListener('change', updateVisibility)
+        updateVisibility()
+      }
+    })();
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft' && !e.target.matches('input, textarea, select, [contenteditable="true"]')) {
+        e.preventDefault();
+        window.location.href = '../index.html';
+      }
+    });
+  </script>
 </body>
 </html>
