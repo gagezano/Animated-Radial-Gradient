@@ -68,8 +68,13 @@ body {
   letter-spacing: 0.2em;
 }
 
-.content p {
-  max-width: 640px;
-  line-height: 1.5;
-  margin-top: 1rem;
+.project-icon {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.project-icon img {
+  width: clamp(80px, 15vw, 130px);
+  filter: invert(1);
 }
