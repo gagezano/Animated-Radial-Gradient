@@ -1,13 +1,38 @@
 :root {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Space Grotesk', 'Neue Haas Grotesk Display', system-ui, sans-serif;
   background: #030003;
   color: #fff;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap');
 
 body {
   margin: 0;
   min-height: 100vh;
   overflow: hidden;
+}
+
+.back-link {
+  position: sticky;
+  top: 0;
+  padding: 0.75rem 1.5rem;
+  background: rgba(3, 0, 3, 0.95);
+  z-index: 10;
+}
+
+.back-link a {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-decoration: none;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-link__icon {
+  font-size: 1rem;
 }
 
 .gradient {
